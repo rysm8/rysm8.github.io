@@ -60,4 +60,4 @@ const config = {
   }
 };
 
-new Chart(document.getElementById('pubsPerformanceChart'), config);
+new Chart(document.getElementById('homepubsplot'), config);
