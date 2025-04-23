@@ -81,3 +81,7 @@ footer {
   background-color: #e6f2ff;
 }
 
+main {
+  margin: 0 20px; /* Adds 20px margin to the left and right */
+}
+

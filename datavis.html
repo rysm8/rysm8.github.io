@@ -27,6 +27,9 @@
 
 <section class="pubs">
       <h1>Does having more pubs make you more succeptible to poor home results?</h1>
+
+      <p>Have you ever wondered if the level of drunkeness (and presumably therefore noisy support) of an away crowd has any effect on their teams' performance? I highly doubt you have, as I indeed also doubt the correlation itself, but why not have a look anyway.</p>
+
       <p>Below is the number of pubs for each current Premier League team within a 1 mile radius of their stadium. Data sourced from Google Maps.</p>
 
 <div class="table-container">
@@ -64,7 +67,7 @@
 
 <p>Here we have each teams' home performance across the past 200 games in all competitions.</p>
 
-<p>Now it's fair to say this venture may be entirely pointless and rather stupid; of course you would expect stronger teams to have a better home record. Teams coming up and down also affects the consistency across the data, but may actually help in some way to reduce the inbalance for newly promoted sides, as they will boast more favourable home records from their time in the Championship.</p>
+<p>Now it's fair to say this venture may be entirely pointless and rather stupid; of course you would expect stronger teams to have a better home record. Teams coming up and down also affects the consistency across the data, but may actually help in some way to reduce the inbalance for newly promoted sides, as they will boast more favourable home records from their time in the Championship. This data was sourced from fbref.</p>
 
 <div class="table-container">
   <table class="styled-table">
@@ -101,6 +104,9 @@
   </table>
 </div>
 
+<p>Now let's use a scatter plot to compare each teams' home win percentage with the density of pubs in a 1 mile radius of their home stadium. I doubt we will learn anything here, and even if there was an implied correlation from the plot, there are far too many factors affecting the validity of the comparison in the first place. But who doesn't love data for data's sake?</p>
+
+<canvas id="homepubsplot" width="600" height="400"></canvas>
 
     </section>
 
@@ -109,5 +115,8 @@
   <footer>
     <p>© 2025 Ryan Smith</p>
   </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="homepubsplot.js"></script>
+
 </body>
 </html>
