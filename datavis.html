@@ -25,15 +25,20 @@
       <p>Here is a collection of insightful, strange, and sometimes pointless visualisations of data from the world of football. Make of it what you will.</p>
     </section>
 
-<section class="pubs">
-      <h1>Does having more pubs make you more succeptible to poor home results?</h1>
+<section class="datavis-container">
+  <h2>Data Visualisations</h2>
+  <p>Click a heading to explore.</p>
 
+  <div class="accordion-item">
+    <button class="accordion-button">Does having more pubs make you more susceptible to poor home results?</button>
+    <div class="accordion-content">
       <p>Have you ever wondered if the level of drunkeness (and presumably therefore noisy support) of an away crowd has any effect on their teams' performance? I highly doubt you have, as I indeed also doubt the correlation itself, but why not have a look anyway.</p>
 
       <p>Below is the number of pubs for each current Premier League team within a 1 mile radius of their stadium. Data sourced from Google Maps.</p>
 
-<div class="table-container">
-  <table class="styled-table">
+      <p><strong>Pubs within 1 mile:</strong></p>
+      <div class="table-container">
+        <table class="styled-table">
     <thead>
       <tr>
         <th>Club</th>
@@ -63,14 +68,16 @@
       <tr><td>Manchester City</td><td>2</td></tr>
     </tbody>
   </table>
-</div>
+
+      </div>
 
 <p>Here we have each teams' home performance across the past 200 games in all competitions.</p>
 
 <p>Now it's fair to say this venture may be entirely pointless and rather stupid; of course you would expect stronger teams to have a better home record. Teams coming up and down also affects the consistency across the data, but may actually help in some way to reduce the inbalance for newly promoted sides, as they will boast more favourable home records from their time in the Championship. This data was sourced from fbref.</p>
 
-<div class="table-container">
-  <table class="styled-table">
+      <p><strong>Home performance (last 200 games):</strong></p>
+      <div class="table-container">
+         <table class="styled-table">
     <thead>
       <tr>
         <th>Club</th>
@@ -101,14 +108,17 @@
       <tr><td>Brighton & Hove Albion</td><td>85</td><td>65</td><td>50</td></tr>
       <tr><td>Manchester City</td><td>151</td><td>28</td><td>21</td></tr>
     </tbody>
-  </table>
-</div>
+  </table>>
+      </div>
 
-<p>Now let's use a scatter plot to compare each teams' home win percentage with the density of pubs in a 1 mile radius of their home stadium. I doubt we will learn anything here, and even if there was an implied correlation from the plot, there are far too many factors affecting the validity of the comparison in the first place. But who doesn't love data for data's sake?</p>
+      <p>Now let's use a scatter plot to compare each teams' home win percentage with the density of pubs in a 1 mile radius of their home stadium. I doubt we will learn anything here, and even if there was an implied correlation from the plot, there are far too many factors affecting the validity of the comparison in the first place. But who doesn't love data for data's sake?</p>
 
-<canvas id="homepubsplot" width="600" height="400"></canvas>
+      <canvas id="homepubsplot" width="600" height="400"></canvas>
+    </div>
+  </div>
 
-    </section>
+</section>
+
 
   </main>
 
@@ -180,6 +190,24 @@
   };
 
   new Chart(document.getElementById('homepubsplot'), config);
+</script>
+
+<script>
+  // Accordion toggle
+  const accButtons = document.querySelectorAll('.accordion-button');
+
+  accButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling;
+      const isOpen = content.style.display === 'block';
+      
+      // Close all open sections
+      document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
+
+      // Toggle the current one
+      content.style.display = isOpen ? 'none' : 'block';
+    });
+  });
 </script>
 
 </body>

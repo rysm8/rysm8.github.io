@@ -85,3 +85,36 @@ main {
   margin: 0 70px; /* Adds 20px margin to the left and right */
 }
 
+.accordion-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.accordion-button {
+  background-color: #003366;
+  color: #fff;
+  cursor: pointer;
+  padding: 1rem;
+  width: 100%;
+  text-align: left;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-button:hover {
+  background-color: #005a9c;
+}
+
+.accordion-content {
+  display: none;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+

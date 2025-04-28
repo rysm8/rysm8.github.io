@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Proprietary Metrics | RWFD</title>
   <link rel="stylesheet" href="style.css" />
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 </head>
 <body>
   <header>
@@ -22,8 +25,116 @@
   <main>
     <section class="intro">
       <h1>Proprietary Metrics</h1>
-      <p>Content coming soon. Here you'll find custom-built stats and methodologies.</p>
+      <p>Click on a button to explore.</p>
     </section>
+
+<button onclick="toggleContent('randomnessIndexContent')" class="toggle-button">
+  The Randomness Index
+</button>
+
+<div id="randomnessIndexContent" class="toggle-content" style="display: none; padding-top: 1rem;">
+  <h2>The Chaotic Randomness Index</h3>
+  <blockquote>
+     "He's chaos. But I actually think there's something in that chaos that can work. He makes things happen, even if it's not always what you expect."<br>
+    <em>– Jamie Carragher, on Darwin Núñez</em>
+  </blockquote>
+
+  <p>
+    Football has always had its artists, its tacticians, and its chaos agents. The <strong>Chaotic Randomness Index (CRI)</strong> is my attempt to quantify the unpredictable — to put a number on the <em>Darwin Núñez Effect</em>.
+  </p>
+  <p>
+    While traditional metrics focus on consistency and efficiency, the CRI celebrates players whose performances are defined by variance. One week they’re scoring 30-yard screamers, the next they’re missing open goals. They make games <em>fun</em>. This metric is for them.
+  </p>
+
+  <h3>What Goes Into the Chaotic Randomness Index?</h4>
+  <ul>
+    <li><strong>xG vs Goals Volatility:</strong> Measures how often a player over/under-performs their expected goals. The higher the swing, the more unpredictable.</li>
+    <li><strong>Shot Location Entropy:</strong> How randomly does a player shoot? Do they pull the trigger from everywhere? Higher entropy = less predictable.</li>
+<li><strong>Yellow Cards to Fouls Ratio:</strong> A player's chaotic nature often translates to some crazy attempts to win the ball back (and just general attempts to enrage the oppositions), leading to a higher frequency of bookable offences.</li>
+    <li><strong>Risky Pass Ratio:</strong> The frequency of high-risk, high-reward passes - like through balls and switches, regardless of completion.</li>
+    <li><strong>Possession Wastefulness:</strong> Turnovers, failed dribbles, and dispossessions all contribute.</li>
+  </ul>
+
+  <h3>The Components:</h4>
+  <p>To formulate this index we will need to devise a calculation for each factor, and then standardise each metric to 0-1. We can also consider squaring or cubing the normalised values for factors deserving more weight in the index. This index will be a 100-game rolling index, meaning we will calculate each component using data from the player's previous 100 games. Let's first calculate each component:</p>
+
+<h4>xG vs Goals Volatility </h5>
+<p>Now we could use the standard deviation of a player's goals minus their xG per 90', but this isn't a great way of measuring the volatility. xG does tend to vary game to game, but converges over a longer period. To spot exceptional strikers or those who are wasteful, you have to look at the discrepancy in goals to xG across a large number of games.</p>
+
+<p>We will look at the difference in goals to xG across the past 100 games. We can standardise this value to 0-1 by using min-max normalisation:</p>
+
+<p>
+\( \text{Normalised} = \frac{x - \min(x)}{\max(x) - \min(x)} \)
+</p>
+<p>Where \{ x \) is the actual value for the player we are calulating, and \(  \min(x) \) and \( \max(x) \) represent the minimum and maximum values for this metric across the entire dataset.</p>
+
+<p>We can take 16 as our max value, as that is the largest xG discrepancy across Europe's top 5 leagues in the past 100 games (Kane). We take 0 as our minimum value. The fact that a player like Kane will rank high in this component, but doesn't fit the concept behind the CRI, suggests this component should have a lower weight.</li>
+
+
+
+<h4>Shot Location Entropy</h5>
+<p>This will measure how unpredictable the shot locations are. Players shooting from all over the field will have high entropy, whilst poachers tend to have low entropy.</p>
+
+<p>To begin with we must divide the pitch into a grid, splitting the attacking third into 10 zones. We will then count the number of shots per zone, normalising to get a probability distribution:</p>
+
+<p>
+	\( p_i = \frac{\text{shots in zone } i}{\text{total shots}} \)
+</p>
+
+<p>Then we can calculate the Shannon Entropy, giving us a score from 0 to \( \log_2 n \), with 0 being a player taking all their shots from the same zone. We can then normalise this, dividing by \( \log_2 n \), to get a value between 0-1. As we are using 100 games, we can take this to be \( \log_2 100 \).</p>
+
+<p>
+\( H = - \sum_i p_i \log_2 p_i \)
+</p>
+
+<h4>Yellow Cards to Fouls Committed Ratio</h5>
+<p>This will measure the frequency of bookable fouls a player commits; by using a ratio we can attempt to remove players with a high frequency of tackles and fouls, and therefore a large number of bookings.</p>
+
+<p>
+	\( \text{YC/F Ratio} = \frac{\text{Number of Yellow Cards} }{\text{Total Fouls Committed}} \)
+</p>
+
+<p>This value will not need normalising as it will fall between 0 and 1, with 1 being a player who has never committed a foul without being booked. 
+
+
+<h4>Risky Pass Ratio</h5>
+<p>To calculate this ratio, we can look at the frequency of riskier pass types (through balls, switches, long balls), and then divide by the total number of all pass types from that player.</p>
+
+<p>
+\( \text{Risky Pass Ratio} = \frac{\text{Through Balls} + \text{Switches} + \text{Long Balls}}{\text{Total Passes}} \)
+</p>
+
+<p> This will provide a number between 0 and 1 and thus will not require any standardisation. A player with the value close to 1 would attempt a higher frequency of passes.
+
+<h4>Possession Loss Rate</h5>
+<p>Now we will look at the number of times a player loses the ball comparatively with the number of times that they have the ball in 90'. From my experience watching football, players with a chaotic nature tend to make strange decisions, often at the expense of possession.</p>
+
+<p>
+	\( \text{Possession Loss Rate} = \frac{\text{Turnovers per 90}}{\text{Touches per 90}} \)
+</p>
+
+  <p>
+    This will provide a value between 0 and 1, with 0 being a player who never gives up possession of the ball.
+  </p>
+
+<h3>Final Formula:</h4>
+<p>Once we have normalised each component to [0,1], we get the following formula:</p>
+
+<p>
+\( \text{Randomness Index} = \sum_{i=1}^{5} w_i \cdot \text{Component}_i \)
+</p>Where \( w_i \) represents individual weightings for each component. </p>
+
+<p>I will leave the weightings down to discretion; to formally develop this as a uniform index, it would require collaboration and varying input to arrive at an agreeable consensus. This idea could also be used to form a DNI - Darwin Núñez Index - by normalising each metric against Darwin's stats, and therefore building an index to find player most comparable to the Uruguayan. 
+
+</div>
+
+<script>
+function toggleContent(id) {
+  const element = document.getElementById(id);
+  element.style.display = (element.style.display === 'none') ? 'block' : 'none';
+}
+</script>
+
   </main>
 
   <footer>
