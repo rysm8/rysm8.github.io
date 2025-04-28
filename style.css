@@ -117,4 +117,51 @@ main {
   border-top: 1px solid #ccc;
 }
 
+.player-comparison {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f0f4f8;
+  margin: 2rem auto;
+  border-radius: 10px;
+  max-width: 800px;
+}
+
+.player-comparison select {
+  margin: 10px;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.player-comparison canvas {
+  margin-top: 20px;
+}
+
+.articles {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article-preview {
+  background-color: #f9f9f9;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.article-preview h2 {
+  margin-bottom: 0.5rem;
+}
+
+.article-preview h2 a {
+  text-decoration: none;
+  color: #1e3a8a;
+}
+
+.article-preview .date {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
 

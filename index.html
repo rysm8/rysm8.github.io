@@ -25,21 +25,94 @@
       <p>I am a Mathematics graduate with a deep love for football and data. Here you will be able to find articles and analysis on football betting, unique (and sometimes quite silly) data visualisations, and my own propietary football statistics/metrics.</p>
     </section>
 
-  <section class="football-facts">
-    <h2>Football Facts and Stats That Interest Me</h2>
-    <ul>
-      <li>As of January 2024, James Milner had played against 2,277 players in the Premier League, equavilent to 48% of all PL players.</li>
-      <li>Across the top leagues, around 20-25% of all goals happen in the final 15 minutes.</li>
-      <li>Since 1998, over 60% of World Cup matches have ended with either a draw or a 1-goal margin.</li>
-      <li>Statistically speaking, teams do see a performance bump for around 3-5 games after hiring a new manager, including temporary appointments. However, performance usually reverts to the mean within 10 games.</li>
-    </ul>
-  </section>
-</main>
+<section class="player-comparison">
+      <h2>Compare Top Scorers in Europe's Top Leagues</h2>
 
+      <label for="player1">Select Player 1:</label>
+      <select id="player1">
+        <option value="Lewandowski">Robert Lewandowski</option>
+        <option value="Kane">Harry Kane</option>
+        <option value="Salah">Mohamed Salah</option>
+	<option value="Dembélé">Ousmane Dembélé</option>
+	<option value="Retegui">Mateo Retegui</option>
+      </select>
+
+      <label for="player2">Select Player 2:</label>
+      <select id="player2">
+        <option value="Lewandowski">Robert Lewandowski</option>
+        <option value="Kane">Harry Kane</option>
+        <option value="Salah">Mohamed Salah</option>
+	<option value="Dembélé">Ousmane Dembélé</option>
+	<option value="Retegui">Mateo Retegui</option>
+      </select>
+
+      <canvas id="comparisonChart" width="600" height="400"></canvas>
+    </section>
   </main>
 
   <footer>
     <p>© 2025 Ryan Smith</p>
   </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+  <script>
+    const playerStats = {
+      "Lewandowski": { goals: 25, assists: 2, xG: 24.4, xA: 2.3 },
+      "Kane": { goals: 24, assists: 8, xG: 19.5, xA: 5.2 },
+      "Salah": { goals: 28, assists: 18, xG: 23.9, xA: 12.8 },
+      "Dembélé": { goals: 21, assists: 6, xG: 15.6, xA: 8.2 },
+      "Retegui": { goals: 24, assists: 5, xG: 17.2, xA: 3.9 }
+    };
+
+    const ctx = document.getElementById('comparisonChart').getContext('2d');
+    let chart;
+
+    function updateChart() {
+      const p1 = document.getElementById('player1').value;
+      const p2 = document.getElementById('player2').value;
+
+      const data = {
+        labels: ['Goals', 'Assists', 'xG', 'xA'],
+        datasets: [
+          {
+            label: p1,
+            data: Object.values(playerStats[p1]),
+            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+          },
+          {
+            label: p2,
+            data: Object.values(playerStats[p2]),
+            backgroundColor: 'rgba(255, 99, 132, 0.5)'
+          }
+        ]
+      };
+
+      if (chart) {
+        chart.destroy();
+      }
+
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    // Initialize chart
+    updateChart();
+
+    // Update when dropdowns change
+    document.getElementById('player1').addEventListener('change', updateChart);
+    document.getElementById('player2').addEventListener('change', updateChart);
+  </script>
+
+
 </body>
 </html>
